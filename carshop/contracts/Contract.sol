@@ -226,5 +226,19 @@ contract CarEstate {
         emit ReviewLiked(id, reviewindex, user, review.likes);
     }
 
-    function getHighestRatedCar() external view returns (uint256) {}
+    function getHighestRatedCar() external view returns (uint256) {
+        uint256 highestRating = 0;
+        uint256 highestRatedCar = 0;
+        for (uint256 i = 0; i <reviewCounter; i++) {
+            uint256 productId = i + 1;
+            if(products[productId].totalReviews > 0){
+                uint256 averageRating = products[productId].totalRating / products[productId].totalReviews;
+                if (averageRating > highestRating) {
+                    highestRating = averageRating;
+                    highestRatedCar = productId;
+                }
+            }
+        }
+        return highestRatedCar;
+    }
 }
